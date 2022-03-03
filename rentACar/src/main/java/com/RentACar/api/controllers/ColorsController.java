@@ -15,9 +15,10 @@ import com.RentACar.business.abstracts.ColorService;
 import com.RentACar.business.dtos.ColorListDto;
 import com.RentACar.business.requests.CreateColorRequest;
 import com.RentACar.business.requests.DeleteColorRequest;
-import com.RentACar.business.requests.UpdateBrandRequest;
 import com.RentACar.business.requests.UpdateColorRequest;
 import com.RentACar.core.concretes.BusinessException;
+import com.RentACar.core.results.DataResult;
+import com.RentACar.core.results.Result;
 
 
 @RestController
@@ -32,28 +33,28 @@ public class ColorsController {
 	}
 	
 	@GetMapping("/getall")
-	public List<ColorListDto> getAll(){
+	public DataResult<List<ColorListDto>> getAll(){
 		return this.colorService.getAll();
 	}
 	
 	@GetMapping("/getid")
-    public ColorListDto getById(int colorId) throws BusinessException {
+    public DataResult<ColorListDto> getById(int colorId) throws BusinessException {
     	return this.colorService.getById(colorId);
     }
 	
 	@PostMapping("/add")
-	public void add(@RequestBody CreateColorRequest createColorRequest) throws BusinessException{
-		this.colorService.add(createColorRequest);	
+	public Result add(@RequestBody CreateColorRequest createColorRequest) throws BusinessException{
+		return this.colorService.add(createColorRequest);	
 	}
 	
     @DeleteMapping("/delete")
-    public void delete(@RequestBody DeleteColorRequest deleteColorRequest) throws BusinessException{
-    this.colorService.delete(deleteColorRequest);
+    public Result delete(@RequestBody DeleteColorRequest deleteColorRequest) throws BusinessException{
+    	return this.colorService.delete(deleteColorRequest);
     }
     
     @PutMapping("/update")
-    public void update(@RequestBody UpdateColorRequest updateColorRequest) throws BusinessException{
-    this.colorService.update(updateColorRequest);
+    public Result update(@RequestBody UpdateColorRequest updateColorRequest) throws BusinessException{
+    	return this.colorService.update(updateColorRequest);
     }
 
 }

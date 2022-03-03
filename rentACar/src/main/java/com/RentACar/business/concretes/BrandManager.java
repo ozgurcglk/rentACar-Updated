@@ -12,6 +12,11 @@ import com.RentACar.business.requests.CreateBrandRequest;
 import com.RentACar.business.requests.DeleteBrandRequest;
 import com.RentACar.business.requests.UpdateBrandRequest;
 import com.RentACar.core.concretes.BusinessException;
+import com.RentACar.core.results.DataResult;
+import com.RentACar.core.results.ErrorResult;
+import com.RentACar.core.results.Result;
+import com.RentACar.core.results.SuccessDataResult;
+import com.RentACar.core.results.SuccessResult;
 import com.RentACar.core.utilities.mapping.ModelMapperService;
 import com.RentACar.dataAccess.abstracts.BrandDao;
 import com.RentACar.business.abstracts.BrandService;
@@ -31,20 +36,26 @@ public class BrandManager implements BrandService {
 	}
 
 	@Override
-	public List<BrandListDto> getAll() {
+	public DataResult<List<BrandListDto>> getAll() {
 		var result = this.brandDao.findAll();
 		List<BrandListDto> response = result.stream()
 				.map(brand -> this.modelMapperService.forDto().map(brand, BrandListDto.class))
 				.collect(Collectors.toList());
-		return response;
+		return new SuccessDataResult<List<BrandListDto>>(response);
 	}
 
 	@Override
-	public void add(CreateBrandRequest createBrandRequest) throws BusinessException {
+	public Result add(CreateBrandRequest createBrandRequest) throws BusinessException {
 		Brand brand = this.modelMapperService.forRequest().map(createBrandRequest, Brand.class);
 		if (checkBrandNames(brand)) {
 			this.brandDao.save(brand);
+			return new SuccessResult("Brand.add");
 		}
+		else {
+			return new ErrorResult("Brand can not added");
+		}
+		
+		
 
 	}
 
@@ -62,13 +73,13 @@ public class BrandManager implements BrandService {
 	}
 
 	@Override
-	public BrandListDto getById(int brandId) throws BusinessException {
+	public DataResult<BrandListDto> getById(int brandId) throws BusinessException {
 		var result = this.brandDao.getByBrandId(brandId);
 		if (result == null) {
 			throw new BusinessException("Bu ID'ye sahip bir marka bulunmuyor.");
 		} else {
 			BrandListDto response = this.modelMapperService.forDto().map(result, BrandListDto.class);
-			return response;
+			return new SuccessDataResult<BrandListDto>(response);
 		}
 	}
 
@@ -82,21 +93,30 @@ public class BrandManager implements BrandService {
 	}
 
 	@Override
-	public void delete(DeleteBrandRequest deleteBrandRequest) throws BusinessException {
+	public Result delete(DeleteBrandRequest deleteBrandRequest) throws BusinessException {
 		var result = this.modelMapperService.forRequest().map(deleteBrandRequest, Brand.class);
 		if (checkBrandId(result)) {
 			this.brandDao.delete(result);
+			return new SuccessResult("Brand.delete");
 		}
-
+		else {
+			return new ErrorResult("Brand can not deleted");
+		}
+		
 	}
 
 	@Override
-	public void update(UpdateBrandRequest updateBrandRequest) throws BusinessException {
+	public Result update(UpdateBrandRequest updateBrandRequest) throws BusinessException {
 		var result = this.modelMapperService.forRequest().map(updateBrandRequest, Brand.class);
 		if (checkBrandId(result) && checkBrandNames(result)) {
 			this.brandDao.save(result);
+			return new SuccessResult("Brand.update");
 		}
-
+		else {
+			return new ErrorResult("Brand can not updated");
+		}
+		
+		
 	}
 
 }

@@ -13,12 +13,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.RentACar.business.abstracts.CarService;
 import com.RentACar.business.dtos.CarListDto;
+import com.RentACar.business.dtos.GetCarByPriceDto;
 import com.RentACar.business.requests.CreateCarRequest;
 import com.RentACar.business.requests.DeleteCarRequest;
-import com.RentACar.business.requests.DeleteColorRequest;
 import com.RentACar.business.requests.UpdateCarRequest;
-import com.RentACar.business.requests.UpdateColorRequest;
 import com.RentACar.core.concretes.BusinessException;
+import com.RentACar.core.results.DataResult;
+import com.RentACar.core.results.Result;
 
 @RestController
 @RequestMapping("/api/cars")
@@ -32,28 +33,43 @@ public class CarsController {
 	}
 	
 	@GetMapping("/getall")
-	public List<CarListDto> getAll(){
+	public DataResult<List<CarListDto>> getAll(){
 		return this.carService.getAll();
 	}
 	
 	@GetMapping("/getid")
-    public CarListDto getById(int carId) throws BusinessException {
+    public DataResult<CarListDto> getById(int carId) throws BusinessException {
     	return this.carService.getById(carId);
     }
 	
+	@GetMapping("/getAllPaged")
+    public DataResult<List<CarListDto>> getAllPaged(int pageNo, int pageSize) throws BusinessException {
+    	return this.carService.getAllPaged(pageNo,pageSize);
+    }
+	
+	@GetMapping("/getAllSorted"+" SortValue: 0=ASC -- 1=DESC ")
+    public DataResult<List<CarListDto>> getAllSorted(int sortValue) throws BusinessException {
+    	return this.carService.getAllSorted(sortValue);
+    }
+	
+	@GetMapping("/getByDailyPrice")
+    public DataResult<List<GetCarByPriceDto>> getCarByDailyPriceLessThanEqual(int dailyPrice) throws BusinessException {
+    	return this.carService.getCarByDailyPriceLessThanEqual(dailyPrice);
+    }
+	
 	@PostMapping("/add")
-	public void add(@RequestBody CreateCarRequest createCarRequest) throws BusinessException{
-		this.carService.add(createCarRequest);	
+	public Result add(@RequestBody CreateCarRequest createCarRequest) throws BusinessException{
+		return this.carService.add(createCarRequest);	
 	}
 	
     @DeleteMapping("/delete")
-    public void delete(@RequestBody DeleteCarRequest deleteCarRequest) throws BusinessException{
-    this.carService.delete(deleteCarRequest);
+    public Result delete(@RequestBody DeleteCarRequest deleteCarRequest) throws BusinessException{
+    	return this.carService.delete(deleteCarRequest);
     }
     
     @PutMapping("/update")
-    public void update(@RequestBody UpdateCarRequest updateCarRequest) throws BusinessException{
-    this.carService.update(updateCarRequest);
+    public Result update(@RequestBody UpdateCarRequest updateCarRequest) throws BusinessException{
+    	return this.carService.update(updateCarRequest);
     }
 
 }

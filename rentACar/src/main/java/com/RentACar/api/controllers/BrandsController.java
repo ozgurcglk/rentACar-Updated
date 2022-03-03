@@ -2,7 +2,6 @@ package com.RentACar.api.controllers;
 
 import java.util.List;
 
-import org.apache.commons.text.WordUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,7 +17,8 @@ import com.RentACar.business.requests.CreateBrandRequest;
 import com.RentACar.business.requests.DeleteBrandRequest;
 import com.RentACar.business.requests.UpdateBrandRequest;
 import com.RentACar.core.concretes.BusinessException;
-import com.RentACar.entities.concretes.Brand;
+import com.RentACar.core.results.DataResult;
+import com.RentACar.core.results.Result;
 
 
 @RestController
@@ -33,27 +33,27 @@ public class BrandsController {
     }
 
     @GetMapping("/getall")
-    public List<BrandListDto> getAll(){
+    public DataResult<List<BrandListDto>> getAll(){
         return this.brandService.getAll();
     }
     
     @GetMapping("/getid")
-    public BrandListDto getById(int brandId) throws BusinessException {
+    public DataResult<BrandListDto> getById(int brandId) throws BusinessException {
     	return this.brandService.getById(brandId);
     }
     @PostMapping("/add")
-    public void add(@RequestBody CreateBrandRequest createBrandRequest) throws BusinessException {
-        this.brandService.add(createBrandRequest);
+    public Result add(@RequestBody CreateBrandRequest createBrandRequest) throws BusinessException {
+    	return this.brandService.add(createBrandRequest);
     }
     
     @DeleteMapping("/delete")
-    public void delete(@RequestBody DeleteBrandRequest deleteBrandRequest) throws BusinessException{
-    this.brandService.delete(deleteBrandRequest);
+    public Result delete(@RequestBody DeleteBrandRequest deleteBrandRequest) throws BusinessException{
+    	return this.brandService.delete(deleteBrandRequest);
     }
     
     @PutMapping("/update")
-    public void update(@RequestBody UpdateBrandRequest updateBrandRequest) throws BusinessException{
-    this.brandService.update(updateBrandRequest);
+    public Result update(@RequestBody UpdateBrandRequest updateBrandRequest) throws BusinessException{
+    	return this.brandService.update(updateBrandRequest);
     }
     
 }

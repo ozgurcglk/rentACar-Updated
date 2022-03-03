@@ -7,14 +7,15 @@ import com.RentACar.business.requests.CreateBrandRequest;
 import com.RentACar.business.requests.DeleteBrandRequest;
 import com.RentACar.business.requests.UpdateBrandRequest;
 import com.RentACar.core.concretes.BusinessException;
-import com.RentACar.entities.concretes.Brand;
+import com.RentACar.core.results.DataResult;
+import com.RentACar.core.results.Result;
 
 public interface BrandService {
 
-	List<BrandListDto> getAll();
-	void add(CreateBrandRequest createBrandRequest) throws BusinessException;
-	BrandListDto getById(int brandId) throws BusinessException;
+	DataResult<List<BrandListDto>> getAll();
+	Result add(CreateBrandRequest createBrandRequest) throws BusinessException;
+	DataResult<BrandListDto> getById(int brandId) throws BusinessException;
 	
-	void delete (DeleteBrandRequest deleteBrandRequest) throws BusinessException;
-	void update(UpdateBrandRequest updateBrandRequest) throws BusinessException;
+	Result delete (DeleteBrandRequest deleteBrandRequest) throws BusinessException;
+	Result update(UpdateBrandRequest updateBrandRequest) throws BusinessException;
 }
