@@ -32,7 +32,6 @@ public class Color {
 	private String colorName;
 	
 	@OneToMany
-	@JoinColumn (name = "car_id")
 	private List<Car> cars;
 	
 }
