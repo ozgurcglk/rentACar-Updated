@@ -36,6 +36,5 @@ public class Brand {
 	private String brandName;
 	
 	@OneToMany
-	@JoinColumn (name = "car_id")
 	private List<Car> cars;
 }
