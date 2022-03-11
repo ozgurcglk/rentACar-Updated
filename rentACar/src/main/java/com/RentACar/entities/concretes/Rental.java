@@ -40,4 +40,7 @@ public class Rental {
 	@JoinColumn (name = "car_id")
 	private Car carId;
 	
+	@ManyToOne
+	@JoinColumn (name = "service_id")
+	private AdditionalService additionalService;
 }

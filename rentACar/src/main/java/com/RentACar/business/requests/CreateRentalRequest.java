@@ -4,6 +4,8 @@ import java.time.LocalDate;
 
 import javax.validation.constraints.NotNull;
 
+import org.springframework.lang.Nullable;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,4 +26,7 @@ public class CreateRentalRequest {
 	
 	@NotNull
 	private int carId;
+	
+	@Nullable
+	private int serviceId;
 }

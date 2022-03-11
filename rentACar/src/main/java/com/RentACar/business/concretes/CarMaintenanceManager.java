@@ -20,17 +20,21 @@ import com.RentACar.core.results.SuccessResult;
 import com.RentACar.core.utilities.mapping.ModelMapperService;
 import com.RentACar.dataAccess.abstracts.CarDao;
 import com.RentACar.dataAccess.abstracts.CarMaintenanceDao;
+import com.RentACar.dataAccess.abstracts.RentalDao;
 import com.RentACar.entities.concretes.CarMaintenance;
+import com.RentACar.entities.concretes.Rental;
 
 @Service
 public class CarMaintenanceManager implements CarMaintenanceService {
 
 	private final CarMaintenanceDao carMaintenanceDao;
+	private final RentalDao rentalDao;
 	private final CarDao carDao;
 	private ModelMapperService modelMapperService;
 	
-	public CarMaintenanceManager(CarMaintenanceDao carMaintenanceDao, CarDao carDao, ModelMapperService modelMapperService) {
+	public CarMaintenanceManager(CarMaintenanceDao carMaintenanceDao, RentalDao rentalDao, CarDao carDao, ModelMapperService modelMapperService) {
 		this.carMaintenanceDao = carMaintenanceDao;
+		this.rentalDao = rentalDao;
 		this.carDao = carDao;
 		this.modelMapperService = modelMapperService;
 	}
@@ -47,11 +51,11 @@ public class CarMaintenanceManager implements CarMaintenanceService {
 	@Override
 	public Result add(CreateCarMaintenanceRequest createCarMaintenanceRequest) throws BusinessException {
 		CarMaintenance carMaintenance = this.modelMapperService.forRequest().map(createCarMaintenanceRequest, CarMaintenance.class);
-		//CarMaintenance carMaintenance = new CarMaintenance();
-		//carMaintenance.setCarId(carDao.getById(createCarMaintenanceRequest.getCarId()));
-		//carMaintenance.setDescription(createCarMaintenanceRequest.getDescription());
-		this.carMaintenanceDao.save(carMaintenance);
-		return new SuccessResult("New.Car.Maintenance.Added");
+		if(checkIfRequestedCarIsOnRental(carMaintenance)) {
+			this.carMaintenanceDao.save(carMaintenance);
+			return new SuccessResult("New.Car.Maintenance.Added");
+		} 
+		return new ErrorResult();
 	}
 
 	@Override
@@ -100,5 +104,17 @@ public class CarMaintenanceManager implements CarMaintenanceService {
 		} else {
 			return true;
 		}
+	}
+	
+	private boolean checkIfRequestedCarIsOnRental(CarMaintenance carMaintenance) {
+		List<Rental> result = this.rentalDao.getByCarId(carMaintenance.getCarId());
+		if(result != null) {
+			for (Rental rental : result) {
+				if(rental.getReturnDate() == null) {
+					return false;
+				}	
+			}
+			
+		} return true;
 	}
 }
