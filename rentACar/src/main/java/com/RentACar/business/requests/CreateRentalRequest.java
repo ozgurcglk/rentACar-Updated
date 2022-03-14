@@ -1,10 +1,13 @@
 package com.RentACar.business.requests;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import javax.validation.constraints.NotNull;
 
 import org.springframework.lang.Nullable;
+
+import com.RentACar.business.dtos.ListAdditionalServiceIdDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,7 +19,7 @@ import lombok.NoArgsConstructor;
 public class CreateRentalRequest {
 	
 	@NotNull
-	private int customerId;
+	private int userId;
 	
 	@NotNull
 	private LocalDate rentDate;
@@ -28,5 +31,5 @@ public class CreateRentalRequest {
 	private int carId;
 	
 	@Nullable
-	private int serviceId;
+	private List<ListAdditionalServiceIdDto> serviceIds;
 }

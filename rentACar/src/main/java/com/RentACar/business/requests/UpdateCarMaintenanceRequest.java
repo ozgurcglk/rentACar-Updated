@@ -3,6 +3,8 @@ package com.RentACar.business.requests;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.springframework.lang.Nullable;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,7 +20,7 @@ public class UpdateCarMaintenanceRequest {
 	@Size(min=5, max=50)
 	private String description;
 	
-	@NotNull
+	@Nullable
 	@Size(min=5, max=50)
 	private String returnDate;
 	

@@ -3,9 +3,11 @@ package com.RentACar.business.concretes;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.RentACar.business.abstracts.CarMaintenanceService;
+import com.RentACar.business.abstracts.CarService;
 import com.RentACar.business.dtos.ListCarMaintenanceDto;
 import com.RentACar.business.requests.CreateCarMaintenanceRequest;
 import com.RentACar.business.requests.DeleteCarMaintenanceRequest;
@@ -29,13 +31,14 @@ public class CarMaintenanceManager implements CarMaintenanceService {
 
 	private final CarMaintenanceDao carMaintenanceDao;
 	private final RentalDao rentalDao;
-	private final CarDao carDao;
+	private final CarService carService;
 	private ModelMapperService modelMapperService;
 	
-	public CarMaintenanceManager(CarMaintenanceDao carMaintenanceDao, RentalDao rentalDao, CarDao carDao, ModelMapperService modelMapperService) {
+	@Autowired
+	public CarMaintenanceManager(CarMaintenanceDao carMaintenanceDao, RentalDao rentalDao, CarService carService, ModelMapperService modelMapperService) {
 		this.carMaintenanceDao = carMaintenanceDao;
 		this.rentalDao = rentalDao;
-		this.carDao = carDao;
+		this.carService = carService;
 		this.modelMapperService = modelMapperService;
 	}
 	
@@ -50,8 +53,14 @@ public class CarMaintenanceManager implements CarMaintenanceService {
 
 	@Override
 	public Result add(CreateCarMaintenanceRequest createCarMaintenanceRequest) throws BusinessException {
-		CarMaintenance carMaintenance = this.modelMapperService.forRequest().map(createCarMaintenanceRequest, CarMaintenance.class);
+		
+		CarMaintenance carMaintenance = this.modelMapperService.forRequest().map(createCarMaintenanceRequest, CarMaintenance.class);		
+		//CarMaintenance carMaintenance = new CarMaintenance();
+		//carMaintenance.setCarId(carService.getById(createCarMaintenanceRequest.getCarId()));
+		//carMaintenance.setDescription(createCarMaintenanceRequest.getDescription());
+		
 		if(checkIfRequestedCarIsOnRental(carMaintenance)) {
+			carMaintenance.setCarMaintenanceId(0);
 			this.carMaintenanceDao.save(carMaintenance);
 			return new SuccessResult("New.Car.Maintenance.Added");
 		} 

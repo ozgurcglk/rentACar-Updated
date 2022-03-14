@@ -12,4 +12,5 @@ import com.RentACar.entities.concretes.Rental;
 public interface RentalDao extends JpaRepository<Rental, Integer>{
 		Rental getByRentalId(int rentalId);
 		List<Rental> getByCarId(Car carId);
+
 }

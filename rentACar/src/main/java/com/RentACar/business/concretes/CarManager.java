@@ -53,7 +53,7 @@ public class CarManager implements CarService {
 	public Result add(CreateCarRequest createCarRequest) throws BusinessException {
 		Car car = this.modelMapperService.forRequest().map(createCarRequest, Car.class);
 		this.carDao.save(car);
-		return new SuccessResult("Car added");
+		return new SuccessResult("New.Car.Successfully.Added");
 
 	}
 

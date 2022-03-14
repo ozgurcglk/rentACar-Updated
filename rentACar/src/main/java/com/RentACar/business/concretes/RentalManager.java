@@ -113,6 +113,18 @@ public class RentalManager implements RentalService {
 			
 		} return true;
 	}
+	
+//	private boolean checkIfRentedAndReturnCityIdIsEqual(int rentalId) throws BusinessException {
+//		
+//		int rentedCityId = rentalDao.getByRentalId(rentalId).getRentedCity().getId();
+//		int returnCityId = rentalDao.getByRentalId(rentalId).getReturnCity().getId();
+//		if(rentedCityId != returnCityId) {
+//			return false;
+//		}
+//		return true;
+//	}
+
+
 }
 	
 

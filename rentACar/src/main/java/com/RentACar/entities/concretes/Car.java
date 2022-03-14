@@ -44,9 +44,9 @@ public class Car {
 	@JoinColumn (name = "color_id")
 	private Color color;
 	
-	@OneToMany (mappedBy= "carId") // mappedBy'a bir bak 
+	@OneToMany (mappedBy = "carId") 
 	private List<CarMaintenance> carMaintenances;
 
-    @OneToMany (mappedBy = "carId")
+    @OneToMany (mappedBy = "rentalId")
     private List<Rental> rentals;
 }
