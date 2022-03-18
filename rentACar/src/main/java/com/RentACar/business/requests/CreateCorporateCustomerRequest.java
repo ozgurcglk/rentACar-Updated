@@ -25,4 +25,6 @@ public class CreateCorporateCustomerRequest {
 	@NotNull
 	private String companyName;
 
+	
+	
 }

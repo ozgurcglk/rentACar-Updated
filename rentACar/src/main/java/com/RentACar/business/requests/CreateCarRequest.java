@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CreateCarRequest {
 	private int dailyPrice;
+	private int milage;
 	private String modelYear;
 	private String description;
 	private int brandId;

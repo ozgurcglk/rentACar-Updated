@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -23,7 +24,11 @@ public class Customer extends User{
 
 	@OneToMany
 	@JoinColumn (name = "rental_id")
+	// mappedBy olması gerek
+	// cascade olabilir
 	private List<Rental> rentals;
 	
+	@OneToMany(mappedBy = "customers")
+	private Invoice invoice;
 	
 }

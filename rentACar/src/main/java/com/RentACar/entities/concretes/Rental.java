@@ -37,6 +37,12 @@ public class Rental {
 	@Column (name = "return_date")
 	private LocalDate returnDate;
 	
+	@Column (name = "rent_milage")
+	private int rentMilage;
+	
+	@Column (name = "return_milage")
+	private int returnMilage;
+	
 	@ManyToOne
 	@JoinColumn (name = "car_id")
 	private Car carId;

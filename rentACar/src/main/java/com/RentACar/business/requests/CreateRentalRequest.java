@@ -30,6 +30,9 @@ public class CreateRentalRequest {
 	@NotNull
 	private int carId;
 	
+	@NotNull
+	private int rentMilage;
+	
 	@Nullable
 	private List<ListAdditionalServiceIdDto> serviceIds;
 }

@@ -32,6 +32,12 @@ public class UpdateRentalRequest {
 	@NotNull
 	private int carId;
 	
+	@NotNull
+	private int rentMilage;
+	
+	@NotNull
+	private int returnMilage;
+	
 	@Nullable
 	private List<ListAdditionalServiceIdDto> serviceIds;
 }
