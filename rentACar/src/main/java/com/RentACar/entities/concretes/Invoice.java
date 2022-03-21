@@ -1,10 +1,12 @@
 package com.RentACar.entities.concretes;
 
 import java.time.LocalDate;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -21,6 +23,8 @@ import lombok.NoArgsConstructor;
 @Entity
 public class Invoice {
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "invoice_id")
 	private int invoiceId;
 	
@@ -33,6 +37,9 @@ public class Invoice {
 	@Column(name = "rent_date")
 	private LocalDate rentDate;
 	
+	@Column(name = "return_date")
+	private LocalDate returnDate;
+	
 	@Transient
 	private int totalRentDay;
 	
@@ -40,7 +47,7 @@ public class Invoice {
 	private double total;
 	
 	@ManyToOne
-	@JoinColumn(name = "customer_id", nullable = false)
-	private List<Customer> customers;
+	@JoinColumn(name = "invoices", nullable = false)
+	private Customer customers;
 	
 }

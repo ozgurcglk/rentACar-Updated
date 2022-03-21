@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.RentACar.business.abstracts.InvoiceService;
@@ -26,6 +27,7 @@ public class InvoiceManager implements InvoiceService {
 	private InvoiceDao invoiceDao;
 	private ModelMapperService modelMapperService;
 	
+	@Autowired
 	public InvoiceManager(InvoiceDao invoiceDao, ModelMapperService modelMapperService) {
 		this.invoiceDao = invoiceDao;
 		this.modelMapperService = modelMapperService;

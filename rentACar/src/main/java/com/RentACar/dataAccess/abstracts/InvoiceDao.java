@@ -11,7 +11,7 @@ import com.RentACar.entities.concretes.Invoice;
 @Repository
 public interface InvoiceDao extends JpaRepository<Invoice, Integer>{
 
-	List<Invoice> findAllByStartDateLessThanEqualAndEndDateGreaterThanEqual(LocalDate rentDate, LocalDate returnDate);
+	List<Invoice> findAllByRentDateLessThanEqualAndReturnDateGreaterThanEqual(LocalDate rentDate, LocalDate returnDate);
 	List<Invoice> findByCustomers_userId(int userId);
 	
 }
