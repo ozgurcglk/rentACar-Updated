@@ -12,6 +12,7 @@ import com.RentACar.business.requests.CreateBrandRequest;
 import com.RentACar.business.requests.DeleteBrandRequest;
 import com.RentACar.business.requests.UpdateBrandRequest;
 import com.RentACar.core.concretes.BusinessException;
+import com.RentACar.core.constants.Messages;
 import com.RentACar.core.results.DataResult;
 import com.RentACar.core.results.ErrorResult;
 import com.RentACar.core.results.Result;
@@ -52,7 +53,7 @@ public class BrandManager implements BrandService {
 			return new SuccessResult("Brand.add");
 		}
 		else {
-			return new ErrorResult("Brand can not added");
+			throw new BusinessException(Messages.NOTADDED); //magic string kurtulma yapısı
 		}
 		
 		

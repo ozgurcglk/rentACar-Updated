@@ -45,7 +45,7 @@ public class CarDamageManager implements CarDamageService {
 	public DataResult<List<ListCarDamageDto>> getAll() {
 		
 		var result = this.carDamageDao.findAll();
-		List<ListCarDamageDto> response = result.stream().map(invoice -> this.modelMapperService.forDto().map(invoice, ListCarDamageDto.class)).collect(Collectors.toList());
+		List<ListCarDamageDto> response = result.stream().map(carDamage -> this.modelMapperService.forDto().map(carDamage, ListCarDamageDto.class)).collect(Collectors.toList());
 		
 		return new SuccessDataResult<List<ListCarDamageDto>>(response);
 	}
