@@ -17,8 +17,10 @@ public class ListCardDetailDto {
 	
 	private String cardCvv;
 	
-	private String cardExpirationDate;
+	private int cardExpirationMonth;
 	
-	private int customerId;
+	private int cardExpirationYear;
+	
+	private ListCustomerDto listCustomerDto;
 	
 }

@@ -7,5 +7,5 @@ import com.RentACar.entities.concretes.City;
 
 @Repository
 public interface CityDao extends JpaRepository<City, Integer>{
-	//City getByCity_Id(int cityId);
+	boolean existsByCityId(int cityId);
 }

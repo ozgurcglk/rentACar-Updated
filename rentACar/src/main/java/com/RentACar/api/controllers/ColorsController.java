@@ -2,6 +2,8 @@ package com.RentACar.api.controllers;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,13 +11,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.RentACar.business.abstracts.ColorService;
-import com.RentACar.business.dtos.ColorListDto;
-import com.RentACar.business.requests.CreateColorRequest;
-import com.RentACar.business.requests.DeleteColorRequest;
-import com.RentACar.business.requests.UpdateColorRequest;
+import com.RentACar.business.dtos.ListColorDto;
+import com.RentACar.business.requests.ColorRequests.CreateColorRequest;
+import com.RentACar.business.requests.ColorRequests.DeleteColorRequest;
+import com.RentACar.business.requests.ColorRequests.UpdateColorRequest;
 import com.RentACar.core.concretes.BusinessException;
 import com.RentACar.core.results.DataResult;
 import com.RentACar.core.results.Result;
@@ -33,17 +36,17 @@ public class ColorsController {
 	}
 	
 	@GetMapping("/getall")
-	public DataResult<List<ColorListDto>> getAll(){
+	public DataResult<List<ListColorDto>> getAll(){
 		return this.colorService.getAll();
 	}
 	
 	@GetMapping("/getid")
-    public DataResult<ColorListDto> getById(int colorId) throws BusinessException {
+    public DataResult<ListColorDto> getById(@RequestParam @Valid int colorId) throws BusinessException {
     	return this.colorService.getById(colorId);
     }
 	
 	@PostMapping("/add")
-	public Result add(@RequestBody CreateColorRequest createColorRequest) throws BusinessException{
+	public Result add(@RequestBody @Valid CreateColorRequest createColorRequest) throws BusinessException{
 		return this.colorService.add(createColorRequest);	
 	}
 	
@@ -53,7 +56,7 @@ public class ColorsController {
     }
     
     @PutMapping("/update")
-    public Result update(@RequestBody UpdateColorRequest updateColorRequest) throws BusinessException{
+    public Result update(@RequestBody @Valid UpdateColorRequest updateColorRequest) throws BusinessException{
     	return this.colorService.update(updateColorRequest);
     }
 

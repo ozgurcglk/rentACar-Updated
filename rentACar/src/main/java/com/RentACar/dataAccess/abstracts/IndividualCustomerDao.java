@@ -8,6 +8,6 @@ import com.RentACar.entities.concretes.IndividualCustomer;
 @Repository
 public interface IndividualCustomerDao extends JpaRepository<IndividualCustomer, Integer> {
 	
-	//User getByUser_Id(int userId);
-	
+	IndividualCustomer getByIndiCustomerId(int indiCustomerId);
+	IndividualCustomer findByEmail(String email);
 }

@@ -5,14 +5,12 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -43,26 +41,30 @@ public class Rental {
 	@Column (name = "return_milage")
 	private int returnMilage;
 	
-	@ManyToOne
-	@JoinColumn (name = "car_id")
-	private Car carId;
+	@Column (name = "total_price")
+	private double totalPrice;
 	
 	@ManyToOne
-	@JoinColumn (name = "user_id")
-	private User user;
-	
-	@ManyToMany (fetch = FetchType.LAZY)
-	@JoinTable (name = "ordered_additional_services", joinColumns = @JoinColumn(name = "rental_id"), inverseJoinColumns = @JoinColumn(name = "service_id"))
-	private List<AdditionalService> orderedAdditionalService;
+	@JoinColumn(name = "renting_city_id")
+	private City rentingCity;
 	
 	@ManyToOne
-	@JoinColumn (name = "rented_city_id")
-	private City rentedCity;
+	@JoinColumn(name = "returning_city_id")
+	private City returningCity;
 	
 	@ManyToOne
-	@JoinColumn (name = "return_city_id")
-	private City returnCity;
+	@JoinColumn(name = "customer_id")
+	private Customer customer;
 	
+	@ManyToOne
+	@JoinColumn(name = "car_id")
+	private Car car;
+	
+	@OneToMany(mappedBy = "rental")
+	private List<OrderedAdditionalService> orderedAdditionalServices;
+	
+	@OneToMany(mappedBy = "rental")
+	private List<Invoice> invoices;
 }
 
 

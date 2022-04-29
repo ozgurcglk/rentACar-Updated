@@ -8,10 +8,11 @@ import org.springframework.stereotype.Service;
 
 import com.RentACar.business.abstracts.CityService;
 import com.RentACar.business.dtos.ListCityDto;
-import com.RentACar.business.requests.CreateCityRequest;
-import com.RentACar.business.requests.DeleteCityRequest;
-import com.RentACar.business.requests.UpdateCityRequest;
+import com.RentACar.business.requests.CityRequests.CreateCityRequest;
+import com.RentACar.business.requests.CityRequests.DeleteCityRequest;
+import com.RentACar.business.requests.CityRequests.UpdateCityRequest;
 import com.RentACar.core.concretes.BusinessException;
+import com.RentACar.core.constants.Messages;
 import com.RentACar.core.results.DataResult;
 import com.RentACar.core.results.Result;
 import com.RentACar.core.results.SuccessDataResult;
@@ -38,7 +39,7 @@ public class CityManager implements CityService{
 		City city = this.modelMapperService.forRequest().map(createCityRequest, City.class);
 		this.cityDao.save(city);
 		
-		return new SuccessResult("New.City.Successfully.Added");
+		return new SuccessResult(Messages.ADDED);
 	}
 
 	@Override
@@ -46,29 +47,36 @@ public class CityManager implements CityService{
 		
 		var result = this.cityDao.findAll();
 		
-		List<ListCityDto> response = result.stream().map(city -> this.modelMapperService.forDto().map(city, ListCityDto.class)).collect(Collectors.toList());
+		List<ListCityDto> response = result.stream().map(city -> this.modelMapperService
+				.forDto().map(city, ListCityDto.class)).collect(Collectors.toList());
 		
 		return new SuccessDataResult<List<ListCityDto>>(response);
 	}
 
 	@Override
 	public Result delete(DeleteCityRequest deleteCityRequest) throws BusinessException {
-		
-		City city = this.modelMapperService.forRequest().map(deleteCityRequest, City.class);
+		checkIfCityExists(deleteCityRequest.getCityId());
+		City city = this.modelMapperService
+				.forRequest().map(deleteCityRequest, City.class);
 		this.cityDao.delete(city);
 
-		return new SuccessResult("City.Deleted");
+		return new SuccessResult(Messages.DELETED);
 	}
 
 	@Override
 	public Result update(UpdateCityRequest updateCityRequest) throws BusinessException {
-		
-		City city = this.modelMapperService.forRequest().map(updateCityRequest, City.class);
+		checkIfCityExists(updateCityRequest.getCityId());
+		City city = this.modelMapperService
+				.forRequest().map(updateCityRequest, City.class);
 		this.cityDao.save(city);
 
-		return new SuccessResult("City.Updated");
+		return new SuccessResult(Messages.UPDATED);
 	}
 	
-	
+	private void checkIfCityExists(int cityId) throws BusinessException{
+		if(this.cityDao.getById(cityId) == null) {
+			throw new BusinessException(Messages.NOTFOUND);
+		}
+	}
 	
 }

@@ -12,6 +12,6 @@ public class ListAdditionalServiceDto {
 	private int serviceId;
 	private String serviceName;
 	private String serviceDescription;
-	private int servicePrice;
+	private double servicePrice;
 	
 }

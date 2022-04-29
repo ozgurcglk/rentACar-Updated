@@ -11,13 +11,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.RentACar.business.abstracts.AdditionalServiceService;
 import com.RentACar.business.dtos.ListAdditionalServiceDto;
-import com.RentACar.business.requests.CreateAdditionalServiceRequest;
-import com.RentACar.business.requests.DeleteAdditionalServiceRequest;
-import com.RentACar.business.requests.UpdateAdditionalServiceRequest;
+import com.RentACar.business.requests.AdditionalServiceRequests.CreateAdditionalServiceRequest;
+import com.RentACar.business.requests.AdditionalServiceRequests.DeleteAdditionalServiceRequest;
+import com.RentACar.business.requests.AdditionalServiceRequests.UpdateAdditionalServiceRequest;
 import com.RentACar.core.concretes.BusinessException;
 import com.RentACar.core.results.DataResult;
 import com.RentACar.core.results.Result;
@@ -38,8 +39,8 @@ public class AdditionalServicesController {
 	}
 	
 	@GetMapping("/getByAdditionalServiceId")
-    public DataResult<ListAdditionalServiceDto> getByAdditionalServiceId(int serviceId) throws BusinessException {
-    	return this.additionalServiceService.getByAdditionalServiceId(serviceId);
+    public DataResult<ListAdditionalServiceDto> getByServiceId(@RequestParam @Valid int serviceId) throws BusinessException {
+    	return this.additionalServiceService.getByServiceId(serviceId);
     }
 	
 	@PostMapping("/add")

@@ -1,9 +1,7 @@
 package com.RentACar.entities.concretes;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -36,10 +34,13 @@ public class CardDetail {
 	@Column(name = "card_cvv")
 	private String cardCvv;
 	
-	@Column(name = "card_expiration_date")
-	private String cardExpirationDate;
+	@Column(name = "card_expiration_month")
+	private int cardExpirationMonth;
 	
-	@ManyToOne(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
+	@Column(name = "card_expiration_year")
+	private int cardExpirationYear;
+	
+	@ManyToOne
 	@JoinColumn(name = "customer_id")
 	private Customer customer;
 	

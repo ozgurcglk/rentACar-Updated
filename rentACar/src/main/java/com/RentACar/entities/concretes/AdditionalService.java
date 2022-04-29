@@ -7,9 +7,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -36,13 +33,9 @@ public class AdditionalService {
 	private String serviceDescription;
 	
 	@Column(name = "service_price")
-	private int servicePrice;
+	private double servicePrice;
 	
-	@ManyToOne
-	@JoinColumn(name = "rental_id")
-	private Rental rental;
-	
-	@ManyToMany(mappedBy="orderedAdditionalService")
-	private List<Rental> rentals;
+	@OneToMany(mappedBy = "additionalService")
+	private List<OrderedAdditionalService> orderedAdditionalServices;
 	
 }

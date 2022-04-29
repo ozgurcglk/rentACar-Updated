@@ -11,13 +11,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.RentACar.business.abstracts.CarMaintenanceService;
 import com.RentACar.business.dtos.ListCarMaintenanceDto;
-import com.RentACar.business.requests.CreateCarMaintenanceRequest;
-import com.RentACar.business.requests.DeleteCarMaintenanceRequest;
-import com.RentACar.business.requests.UpdateCarMaintenanceRequest;
+import com.RentACar.business.requests.CarMaintenanceRequests.CreateCarMaintenanceRequest;
+import com.RentACar.business.requests.CarMaintenanceRequests.DeleteCarMaintenanceRequest;
+import com.RentACar.business.requests.CarMaintenanceRequests.UpdateCarMaintenanceRequest;
 import com.RentACar.core.concretes.BusinessException;
 import com.RentACar.core.results.DataResult;
 import com.RentACar.core.results.Result;
@@ -37,9 +38,9 @@ public class CarMaintenancesController {
 		return this.carMaintenanceService.getAll();
 	}
 	
-	@GetMapping("/getByCarMaintenanceId")
-    public DataResult<ListCarMaintenanceDto> getByCarMaintenanceId(int carMaintenanceId) throws BusinessException {
-    	return this.carMaintenanceService.getByCarMaintenanceId(carMaintenanceId);
+	@GetMapping("/getById")
+    public DataResult<ListCarMaintenanceDto> getById(@RequestParam @Valid int carMaintenanceId) throws BusinessException {
+    	return this.carMaintenanceService.getById(carMaintenanceId);
     }
 	
 	@PostMapping("/add")

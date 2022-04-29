@@ -10,7 +10,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -31,8 +30,8 @@ public class Invoice {
 	@Column(name = "invoice_number")
 	private String invoiceNumber;
 	
-	@Column(name = "creating_date")
-	private LocalDate creatingDate;
+	@Column(name = "create_date")
+	private LocalDate createDate;
 	
 	@Column(name = "rent_date")
 	private LocalDate rentDate;
@@ -40,14 +39,19 @@ public class Invoice {
 	@Column(name = "return_date")
 	private LocalDate returnDate;
 	
-	@Transient
+	@Column(name = "total_rent_day")
 	private int totalRentDay;
 	
 	@Column(name = "total")
 	private double total;
 	
 	@ManyToOne
-	@JoinColumn(name = "invoices", nullable = false)
-	private Customer customers;
+	@JoinColumn(name = "customer_id")
+	private Customer customer;
+
+	@ManyToOne
+	@JoinColumn(name = "rental_id")
+	private Rental rental;	
+	
 	
 }

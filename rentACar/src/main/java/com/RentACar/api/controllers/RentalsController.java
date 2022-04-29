@@ -11,16 +11,18 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.RentACar.business.abstracts.RentalService;
 import com.RentACar.business.dtos.ListRentalDto;
-import com.RentACar.business.requests.CreateRentalRequest;
-import com.RentACar.business.requests.DeleteRentalRequest;
-import com.RentACar.business.requests.UpdateRentalRequest;
+import com.RentACar.business.requests.RentalRequests.CreateRentalRequest;
+import com.RentACar.business.requests.RentalRequests.DeleteRentalRequest;
+import com.RentACar.business.requests.RentalRequests.UpdateRentalRequest;
 import com.RentACar.core.concretes.BusinessException;
 import com.RentACar.core.results.DataResult;
 import com.RentACar.core.results.Result;
+import com.RentACar.entities.concretes.Rental;
 
 @RestController
 @RequestMapping("/api/rentals")
@@ -38,12 +40,12 @@ public class RentalsController {
 	}
 	
 	@GetMapping("/getByRentalId")
-    public DataResult<ListRentalDto> getByRentalId(int rentalId) throws BusinessException {
-    	return this.rentalService.getByRentalId(rentalId);
+    public DataResult<ListRentalDto> getById(@RequestParam @Valid int rentalId) throws BusinessException {
+    	return this.rentalService.getById(rentalId);
     }
 	
 	@PostMapping("/add")
-	public Result add(@RequestBody @Valid  CreateRentalRequest createRentalRequest) throws BusinessException{
+	public Rental add(@RequestBody @Valid  CreateRentalRequest createRentalRequest) throws BusinessException{
 		return this.rentalService.add(createRentalRequest);	
 	}
 	

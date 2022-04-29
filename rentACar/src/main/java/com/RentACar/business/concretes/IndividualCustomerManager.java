@@ -8,10 +8,11 @@ import org.springframework.stereotype.Service;
 
 import com.RentACar.business.abstracts.IndividualCustomerService;
 import com.RentACar.business.dtos.ListIndividualCustomerDto;
-import com.RentACar.business.requests.CreateIndividualCustomerRequest;
-import com.RentACar.business.requests.DeleteIndividualCustomerRequest;
-import com.RentACar.business.requests.UpdateIndividualCustomerRequest;
+import com.RentACar.business.requests.IndividualCustomerRequests.CreateIndividualCustomerRequest;
+import com.RentACar.business.requests.IndividualCustomerRequests.DeleteIndividualCustomerRequest;
+import com.RentACar.business.requests.IndividualCustomerRequests.UpdateIndividualCustomerRequest;
 import com.RentACar.core.concretes.BusinessException;
+import com.RentACar.core.constants.Messages;
 import com.RentACar.core.results.DataResult;
 import com.RentACar.core.results.Result;
 import com.RentACar.core.results.SuccessDataResult;
@@ -36,10 +37,11 @@ public class IndividualCustomerManager implements IndividualCustomerService{
 	@Override
 	public Result add(CreateIndividualCustomerRequest createIndividualCustomerRequest) throws BusinessException {
 		
+		checkIfMailExists(createIndividualCustomerRequest.getEmail());
 		IndividualCustomer individualCustomer = this.modelMapperService.forRequest().map(createIndividualCustomerRequest, IndividualCustomer.class);
 		this.individualCustomerDao.save(individualCustomer);
 		
-		return new SuccessResult("New.Individual.Customer.Successfully.Added");
+		return new SuccessResult(Messages.ADDED);
 		
 	}
 
@@ -55,23 +57,44 @@ public class IndividualCustomerManager implements IndividualCustomerService{
 	@Override
 	public Result delete(DeleteIndividualCustomerRequest deleteIndividualCustomerRequest) throws BusinessException {
 		
+		checkIfIndividualCustomerExists(deleteIndividualCustomerRequest.getIndiCustomerId());
 		IndividualCustomer individualCustomer = this.modelMapperService.forRequest().map(deleteIndividualCustomerRequest, IndividualCustomer.class);
 		this.individualCustomerDao.delete(individualCustomer);
 		
-		return new SuccessResult("Individual.Customer.Successfully.Deleted");
+		return new SuccessResult(Messages.DELETED);
 		
 	}
 
 	@Override
 	public Result update(UpdateIndividualCustomerRequest updateIndividualCustomerRequest) throws BusinessException {
 		
+		checkIfIndividualCustomerExists(updateIndividualCustomerRequest.getIndiCustomerId());
 		IndividualCustomer individualCustomer = this.modelMapperService.forRequest().map(updateIndividualCustomerRequest, IndividualCustomer.class);
 		this.individualCustomerDao.save(individualCustomer);
 		
-		return new SuccessResult("Individual.Customer.Successfully.Updated");
+		return new SuccessResult(Messages.UPDATED);
 		
 	}
 	
+	private boolean checkIfMailExists(String eMail) throws BusinessException{
+		
+		IndividualCustomer individualCustomer = this.individualCustomerDao.findByEmail(eMail);
+		if(individualCustomer != null ) {
+			throw new BusinessException(Messages.EXISTS);
+		} else {
+			return true;
+		}
+		
+	}
 	
+	private IndividualCustomer checkIfIndividualCustomerExists(int indiCustomerId) throws BusinessException{
+		
+		IndividualCustomer individualCustomer = this.individualCustomerDao.getById(indiCustomerId);
+		if(individualCustomer == null) {
+			throw new BusinessException(Messages.NOTFOUND);
+		} else {
+			return individualCustomer;
+		}
+	}
 	
 }

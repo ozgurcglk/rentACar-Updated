@@ -17,16 +17,16 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name="users")
-@Entity
 @Inheritance(strategy = InheritanceType.JOINED)
+@Entity
 public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "user_id")
 	private int userId;
 	
-	@Column(name = "e_mail", unique = true)
-	private String eMail;
+	@Column(name = "email", unique = true)
+	private String email;
 	
 	@Column(name = "password")
 	private String password;

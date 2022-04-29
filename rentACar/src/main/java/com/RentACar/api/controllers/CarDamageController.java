@@ -2,6 +2,8 @@ package com.RentACar.api.controllers;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,9 +15,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.RentACar.business.abstracts.CarDamageService;
 import com.RentACar.business.dtos.ListCarDamageDto;
-import com.RentACar.business.requests.CreateCarDamageRequest;
-import com.RentACar.business.requests.DeleteCarDamageRequest;
-import com.RentACar.business.requests.UpdateCarDamageRequest;
+import com.RentACar.business.requests.CarDamageRequests.CreateCarDamageRequest;
+import com.RentACar.business.requests.CarDamageRequests.DeleteCarDamageRequest;
+import com.RentACar.business.requests.CarDamageRequests.UpdateCarDamageRequest;
 import com.RentACar.core.concretes.BusinessException;
 import com.RentACar.core.results.DataResult;
 import com.RentACar.core.results.Result;
@@ -32,7 +34,7 @@ public class CarDamageController {
 	}
 	
 	@PostMapping("/add")
-	public Result add(@RequestBody CreateCarDamageRequest createCarDamageRequest) throws BusinessException{
+	public Result add(@RequestBody @Valid CreateCarDamageRequest createCarDamageRequest) throws BusinessException{
 		return this.carDamageService.add(createCarDamageRequest);
 	}
 	
@@ -42,7 +44,7 @@ public class CarDamageController {
 	}
 	
 	@PutMapping("/update")
-	public Result update(@RequestBody UpdateCarDamageRequest updateCarDamageRequest ) throws BusinessException{
+	public Result update(@RequestBody @Valid UpdateCarDamageRequest updateCarDamageRequest ) throws BusinessException{
 		return this.carDamageService.update(updateCarDamageRequest);
 	}
 	

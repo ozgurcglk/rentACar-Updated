@@ -9,7 +9,6 @@ public class ModelMapperManager implements ModelMapperService{
 	private ModelMapper modelMapper;
 	
 	public ModelMapperManager(ModelMapper modelMapper) {
-		//super();
 		this.modelMapper = modelMapper;
 	}
 
